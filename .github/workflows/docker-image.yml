@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   push_to_registry:
@@ -34,3 +34,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: webhook call to server
+        run: curl -I http://ec2-43-201-61-18.ap-northeast-2.compute.amazonaws.com:9000/hooks/deploy
