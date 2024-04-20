@@ -1,10 +1,13 @@
-FROM node:18.15 AS builder
-COPY ./numberfinder /root/src
-WORKDIR /root/src
-RUN npm ci --only=production
-FROM builder AS deployment
+FROM node:18-alpine
+
+RUN mkdir -p /usr/app
+WORKDIR /usr/app
+
+COPY ./ ./
+
+RUN npm install 
+RUN npm build
+
 EXPOSE 3000
-RUN npm run build
+
 CMD ["npm", "start"]
-FROM builder AS development
-RUN npm run build
