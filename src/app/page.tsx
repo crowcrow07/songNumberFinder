@@ -1,3 +1,11 @@
+import Header from "@/components/header";
+
 export default function Home() {
-  return <main className="">안녕하세요 배포 테스트중aa입니a다aa,</main>;
+  return (
+    <main className="w-screen flex justify-center h-screen overflow-y-scroll">
+      <div className="xl:w-[1280px] lg:w-[1024px] md:w-[768px] sm:w-[640px] w-[80%]  flex gap-16 flex-col items-center justify-center bg-gray-50">
+        <Header />
+      </div>
+    </main>
+  );
 }
