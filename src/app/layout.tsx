@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ThemeProvider } from "next-themes";
 import ReactQueryProviders from "./hooks/useReactQuery";
+import RecoilRootWrapper from "./hooks/useRecoilRootWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class">
-          <ReactQueryProviders>{children}</ReactQueryProviders>
+          <ReactQueryProviders>
+            <RecoilRootWrapper>{children}</RecoilRootWrapper>
+          </ReactQueryProviders>
         </ThemeProvider>
       </body>
     </html>
