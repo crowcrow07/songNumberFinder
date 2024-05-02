@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { pool } from "../config";
+import { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+import { insertDbExecuteQuery } from "../executeQuery";
 
 interface SongRecord {
   songNumber: string;
@@ -9,30 +9,6 @@ interface SongRecord {
   lyricist: string;
   composer: string;
 }
-
-pool.getConnection((err, conn) => {
-  if (err) console.log("Error connecting to db...");
-  else console.log("Connected to db...!");
-  conn.release();
-});
-
-const executeQuery = (query: string, arrParams: any) => {
-  return new Promise((resolve, reject) => {
-    try {
-      pool.query(query, arrParams, (err, data) => {
-        if (err) {
-          console.log("Error in executing the query");
-          reject(err);
-        }
-        console.log("------db.jsx------");
-        //console.log(data)
-        resolve(data);
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
-};
 
 export function GET() {}
 
@@ -51,7 +27,7 @@ export async function POST(req: Request, res: NextApiResponse) {
     let insertions = [];
 
     for (let song of songs) {
-      const existingSong: any = await executeQuery(queryCheck, [
+      const existingSong: any = await insertDbExecuteQuery(queryCheck, [
         song.songNumber,
       ]);
       if (existingSong.length === 0) {
@@ -62,7 +38,7 @@ export async function POST(req: Request, res: NextApiResponse) {
           song.lyricist,
           song.composer,
         ];
-        const insertion = executeQuery(queryInsert, values)
+        const insertion = insertDbExecuteQuery(queryInsert, values)
           .then(() => {
             return { success: true, title: song.title };
           })
