@@ -3,7 +3,7 @@ import SearchBar from "./search_bar/SearchBar";
 
 export default function Header() {
   return (
-    <header className="fixed top-[100px]">
+    <header className="">
       <Title />
       <SearchBar />
     </header>
