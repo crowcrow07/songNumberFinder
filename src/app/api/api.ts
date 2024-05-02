@@ -3,6 +3,19 @@ export type TjSongListParams = {
   size: string;
 };
 
+export type TjSongType = {
+  id: string;
+  songNumber: string;
+  title: string;
+  artist: string;
+  lyricist: string | null;
+  composer: string | null;
+};
+
+export type SearchKeywordResult = {
+  results: TjSongType[] | undefined;
+};
+
 export const getTjSongList = async ({ text, size }: TjSongListParams) => {
   try {
     const url = new URL("http://localhost:3000/api/scraping/tj");
@@ -31,4 +44,14 @@ export const postTjSongListDb = async (songs: any) => {
   } catch (e) {
     console.error("postTjSongListDb error : ", e);
   }
+};
+
+export const getSearchKeywordSongListDb = async (searchKeyword: string) => {
+  try {
+    const url = `http://localhost:3000/api/db/${searchKeyword}`;
+    const response = await fetch(url);
+    const songs: SearchKeywordResult = await response.json();
+
+    return songs.results;
+  } catch (error) {}
 };
