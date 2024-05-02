@@ -1,5 +1,5 @@
-import { postTjSongListDb } from "@/app/api/scraping/api";
-import { useMutation } from "@tanstack/react-query";
+import { getSearchKeywordSongListDb, postTjSongListDb } from "@/app/api/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useTjSongDbCreateQuery = () => {
   return useMutation({
@@ -7,5 +7,13 @@ export const useTjSongDbCreateQuery = () => {
     onSuccess: () => {
       console.log("useTjSongListCreate Success");
     },
+  });
+};
+
+export const useSongListSearchQuery = (searchKeyword: string) => {
+  return useQuery({
+    queryKey: [`songListSearch${searchKeyword}`],
+    queryFn: () => getSearchKeywordSongListDb(searchKeyword),
+    enabled: !!searchKeyword,
   });
 };
