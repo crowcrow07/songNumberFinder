@@ -1,4 +1,4 @@
-import { TjSongListParams, getTjSongList } from "@/app/api/scraping/api";
+import { TjSongListParams, getTjSongList } from "@/app/api/api";
 import { useQuery } from "@tanstack/react-query";
 
 export const useTjScrapingQuery = ({ text, size }: TjSongListParams) => {
