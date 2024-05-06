@@ -1,10 +1,10 @@
 import Image from "next/image";
 import tj from "@/app/assets/images/png/tj_logo.png";
 
-import { TjSongType } from "@/app/api/api";
+import { TjSongDBType } from "@/app/types/type";
 
 type ResultCardProps = {
-  data: TjSongType;
+  data: TjSongDBType;
 };
 
 export default function ResultCard({ data }: ResultCardProps) {
