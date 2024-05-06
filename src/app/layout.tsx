@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "next-themes";
+import ReactQueryProviders from "./hooks/useReactQuery";
+import RecoilRootWrapper from "./hooks/useRecoilRootWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <ThemeProvider attribute="class">
+          <ReactQueryProviders>
+            <RecoilRootWrapper>{children}</RecoilRootWrapper>
+          </ReactQueryProviders>
+        </ThemeProvider>
       </body>
     </html>
   );
