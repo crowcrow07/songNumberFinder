@@ -4,9 +4,11 @@ import getDriver from "../getDriver";
 import fetchHtml from "../fetchHtml";
 import parseItems from "./tj_parse_items";
 
+import { SongRecord } from "@/app/types/type";
+
 export async function GET(req: NextRequest) {
   const { browser, page } = await getDriver();
-  const results = [];
+  const results: SongRecord[] = [];
 
   const searchText = req.nextUrl.searchParams.get("text") || "ㄱ";
   const size = req.nextUrl.searchParams.get("size") || "100000";

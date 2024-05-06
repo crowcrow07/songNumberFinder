@@ -1,8 +1,10 @@
 import * as cheerio from "cheerio";
 
+import { SongRecord } from "@/app/types/type";
+
 export default function parseItems(html: string) {
   const $ = cheerio.load(html);
-  const items: any = [];
+  const items: SongRecord[] = [];
 
   $("#BoardType1 > table > tbody > tr").each((index, element) => {
     if (index > 0) {
