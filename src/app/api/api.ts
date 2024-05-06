@@ -1,19 +1,8 @@
+import { SearchKeywordResult } from "../types/type";
+
 export type TjSongListParams = {
   text: string;
   size: string;
-};
-
-export type TjSongType = {
-  id: string;
-  songNumber: string;
-  title: string;
-  artist: string;
-  lyricist: string | null;
-  composer: string | null;
-};
-
-export type SearchKeywordResult = {
-  results: TjSongType[] | undefined;
 };
 
 export const getTjSongList = async ({ text, size }: TjSongListParams) => {
@@ -30,6 +19,28 @@ export const getTjSongList = async ({ text, size }: TjSongListParams) => {
   }
 };
 
+export const getTjNewSongList = async () => {
+  try {
+    const url = "http://localhost:3000/api/scraping/tj/new-song";
+    const response = await fetch(url);
+    const newSongs = await response.json();
+
+    return newSongs.results;
+  } catch (e) {
+    console.error("getTjNewSongList error : ", e);
+  }
+};
+
+export const getSearchKeywordSongListDb = async (searchKeyword: string) => {
+  try {
+    const url = `http://localhost:3000/api/db/${searchKeyword}`;
+    const response = await fetch(url);
+    const songs: SearchKeywordResult = await response.json();
+
+    return songs.results;
+  } catch (error) {}
+};
+
 export const postTjSongListDb = async (songs: any) => {
   try {
     const url = "http://localhost:3000/api/db/tj";
@@ -44,14 +55,4 @@ export const postTjSongListDb = async (songs: any) => {
   } catch (e) {
     console.error("postTjSongListDb error : ", e);
   }
-};
-
-export const getSearchKeywordSongListDb = async (searchKeyword: string) => {
-  try {
-    const url = `http://localhost:3000/api/db/${searchKeyword}`;
-    const response = await fetch(url);
-    const songs: SearchKeywordResult = await response.json();
-
-    return songs.results;
-  } catch (error) {}
 };
