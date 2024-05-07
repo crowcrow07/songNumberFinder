@@ -7,7 +7,7 @@ type Params = {
 
 export async function GET(req: Request, context: { params: Params }) {
   try {
-    const searchKeyword = context.params.search_keyword;
+    const searchKeyword = decodeURIComponent(context.params.search_keyword);
     const query = `SELECT * FROM TJ t WHERE REGEXP_REPLACE(title, '\\s+', '') REGEXP REGEXP_REPLACE('${searchKeyword}', '\\s+', '');`;
 
     const results = await searchDbExecuteQuery(query);
