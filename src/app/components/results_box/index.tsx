@@ -34,7 +34,7 @@ export default function ResultsBox() {
   };
 
   return (
-    <div className={`${Container}`}>
+    <div className={`${Container} h-[50%]`}>
       <div className="text-[24px]">
         {isSearchKeywordInputValue(searchKeyword)}
       </div>
@@ -55,4 +55,4 @@ export default function ResultsBox() {
 }
 
 const Container =
-  "pt-[36px] xl:px-[56px] lg:px-[40px] md:px-[28px] sm:px-[24px] px-[16px] drop-shadow-xl flex flex-col items-center  rounded-[20px] h-[500px] xl:w-[540px] lg:w-[500px] md:w-[460px] sm:w-[420px] w-[320px] bg-white pb-4";
+  "pt-[36px] xl:px-[56px] lg:px-[40px] md:px-[28px] sm:px-[24px] px-[16px] drop-shadow-xl flex flex-col items-center  rounded-[20px] xl:w-[540px] lg:w-[500px] md:w-[460px] sm:w-[420px] w-[320px] bg-white pb-4";
