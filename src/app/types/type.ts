@@ -18,3 +18,9 @@ export interface TjSongDBType {
 export type SearchKeywordResult = {
   results: TjSongDBType[] | undefined;
 };
+
+export type SearchQuery = {
+  data: TjSongDBType[] | undefined;
+  isFetched: boolean;
+  isLoading: boolean;
+};
