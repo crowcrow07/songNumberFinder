@@ -12,6 +12,8 @@
 :after,
 :before {
   box-sizing: border-box;
+  scrollbar-color: white;
+  color: black;
 }
 :root {
   -webkit-tap-highlight-color: transparent;
