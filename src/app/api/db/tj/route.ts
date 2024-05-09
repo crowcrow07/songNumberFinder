@@ -2,13 +2,7 @@ import { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import { insertDbExecuteQuery } from "../executeQuery";
 
-interface SongRecord {
-  songNumber: string;
-  title: string;
-  artist: string;
-  lyricist: string;
-  composer: string;
-}
+import { TjSongRecord } from "@/app/types/type";
 
 export function GET() {}
 
@@ -19,7 +13,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       console.log("데이터가 배열이 아닙니다:", session);
       return res.status(400).json({ error: "Invalid data format" });
     }
-    const songs: SongRecord[] = session;
+    const songs: TjSongRecord[] = session;
     const queryCheck = "SELECT * FROM TJ WHERE songNumber = ?";
     const queryInsert =
       "INSERT INTO TJ (songNumber, title, artist, lyricist, composer) VALUES (?, ?, ?, ?, ?)";
@@ -59,7 +53,7 @@ export async function POST(req: Request, res: NextApiResponse) {
       }
     }
 
-    const results = await Promise.all(insertions);
+    await Promise.all(insertions);
     return NextResponse.json({ message: "Data processed successfully" });
   } catch (e) {
     console.error("Error during data processing:", e);
