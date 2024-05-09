@@ -1,5 +1,6 @@
 import {
   TjSongListParams,
+  getKySongList,
   getTjNewSongList,
   getTjSongList,
 } from "@/app/api/api";
@@ -16,5 +17,12 @@ export const useTjNewSongScrapingQuery = () => {
   return useQuery({
     queryKey: ["tjNewSongScrapingQuery"],
     queryFn: () => getTjNewSongList(),
+  });
+};
+
+export const useKyScrapingQuery = ({ text }: { text: string }) => {
+  return useQuery({
+    queryKey: [`kyScraping${text}`],
+    queryFn: () => getKySongList({ text }),
   });
 };
