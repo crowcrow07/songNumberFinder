@@ -1,4 +1,4 @@
-export interface SongRecord {
+export interface TjSongRecord {
   songNumber: string;
   title: string;
   artist: string;
@@ -13,6 +13,19 @@ export interface TjSongDBType {
   artist: string;
   lyricist: string | null;
   composer: string | null;
+}
+
+export interface KySongRecord {
+  songNumber: string;
+  title: string;
+  artist: string;
+}
+
+export interface KySongDBType {
+  id: string;
+  songNumber: string;
+  title: string;
+  artist: string;
 }
 
 export type SearchKeywordResult = {
