@@ -40,6 +40,20 @@ export const getTjNewSongList = async () => {
   }
 };
 
+export const getKySongList = async ({ text }: { text: string }) => {
+  try {
+    const baseUrl = getBaseUrl();
+    const url = new URL(`${baseUrl}/api/scraping/ky`);
+    url.searchParams.append("text", text);
+    const response = await fetch(url);
+    const songs = await response.json();
+
+    return songs.results;
+  } catch (e) {
+    console.error("getKySongList error : ", e);
+  }
+};
+
 export const getSearchKeywordSongListDb = async (searchKeyword: string) => {
   try {
     const baseUrl = getBaseUrl();
