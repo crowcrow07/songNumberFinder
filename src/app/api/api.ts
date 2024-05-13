@@ -40,11 +40,18 @@ export const getTjNewSongList = async () => {
   }
 };
 
-export const getKySongList = async ({ text }: { text: string }) => {
+export const getKySongList = async ({
+  text,
+  page,
+}: {
+  text: string;
+  page: string;
+}) => {
   try {
     const baseUrl = getBaseUrl();
     const url = new URL(`${baseUrl}/api/scraping/ky`);
     url.searchParams.append("text", text);
+    url.searchParams.append("page", page);
     const response = await fetch(url);
     const songs = await response.json();
 
@@ -54,10 +61,25 @@ export const getKySongList = async ({ text }: { text: string }) => {
   }
 };
 
-export const getSearchKeywordSongListDb = async (searchKeyword: string) => {
+export const getTitleSearchKeywordSongListDb = async (
+  searchKeyword: string
+) => {
   try {
     const baseUrl = getBaseUrl();
-    const url = `${baseUrl}/api/db/${searchKeyword}`;
+    const url = `${baseUrl}/api/db/title/${searchKeyword}`;
+    const response = await fetch(url);
+    const songs: SearchKeywordResult = await response.json();
+
+    return songs.results;
+  } catch (error) {}
+};
+
+export const getSingerSearchKeywordSongListDb = async (
+  searchKeyword: string
+) => {
+  try {
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/db/singer/${searchKeyword}`;
     const response = await fetch(url);
     const songs: SearchKeywordResult = await response.json();
 
@@ -79,5 +101,22 @@ export const postTjSongListDb = async (songs: any) => {
     await fetch(url, options);
   } catch (e) {
     console.error("postTjSongListDb error : ", e);
+  }
+};
+
+export const postKySongListDb = async (songs: any) => {
+  try {
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/db/ky`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(songs),
+    };
+    await fetch(url, options);
+  } catch (e) {
+    console.error("postKySongListDb error : ", e);
   }
 };
