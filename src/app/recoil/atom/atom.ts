@@ -9,3 +9,8 @@ export const searchKeywordInput = atom({
   key: "searchKeywordInputAtom",
   default: "",
 });
+
+export const searchKeywordType = atom({
+  key: "searchKeywordType",
+  default: "title",
+});
