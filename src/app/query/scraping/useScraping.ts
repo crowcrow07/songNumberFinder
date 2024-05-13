@@ -20,9 +20,15 @@ export const useTjNewSongScrapingQuery = () => {
   });
 };
 
-export const useKyScrapingQuery = ({ text }: { text: string }) => {
+export const useKyScrapingQuery = ({
+  text,
+  page,
+}: {
+  text: string;
+  page: string;
+}) => {
   return useQuery({
-    queryKey: [`kyScraping${text}`],
-    queryFn: () => getKySongList({ text }),
+    queryKey: [`kyScraping${text}${page}`],
+    queryFn: () => getKySongList({ text, page }),
   });
 };
