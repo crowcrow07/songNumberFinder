@@ -28,12 +28,21 @@ export interface KySongDBType {
   artist: string;
 }
 
+export type SearchKeywordType = {
+  id: string;
+  songNumber: string;
+  title: string;
+  artist: string;
+  source: "KY" | "TJ";
+  rn: number;
+};
+
 export type SearchKeywordResult = {
-  results: TjSongDBType[] | undefined;
+  results: SearchKeywordType[] | undefined;
 };
 
 export type SearchQuery = {
-  data: TjSongDBType[] | undefined;
+  data: SearchKeywordType[] | undefined;
   isFetched: boolean;
   isLoading: boolean;
 };
