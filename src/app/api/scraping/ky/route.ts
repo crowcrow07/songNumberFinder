@@ -7,11 +7,12 @@ export async function GET(req: NextRequest) {
   const { browser, page } = await getDriver();
   const results: any = [];
 
+  const currentPage = req.nextUrl.searchParams.get("page") || "1";
   const searchText = req.nextUrl.searchParams.get("text") || "";
 
-  const url = `https://kysing.kr/karaoke-book/?city=kr&s_cd=2&s_page=1&s_value=${encodeURIComponent(
+  const url = `https://kysing.kr/search/?category=2&keyword=${encodeURIComponent(
     searchText
-  )}`;
+  )}&s_page=${currentPage}`;
 
   const html = await fetchHtml(page, url);
   const items = parseKyItems(html);
