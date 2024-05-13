@@ -33,13 +33,21 @@ export default function SearchBar() {
   return (
     <div className={`${Container}`}>
       <input
-        className="flex-1 xl:text-[24px] lg:text-[20px] md:text-[16px] sm:text-[12px] bg-white text-black"
+        className="flex-2 xl:text-[24px] lg:text-[20px] md:text-[16px] sm:text-[12px] bg-white text-black"
         type="text"
         placeholder="노래 제목 입력"
         onChange={searchInputHandler}
         value={searchInputKeyword}
       />
-      <Image className="ml-2 cursor-pointer" src={search} alt="search" />
+      <div className="flex items-center justify-end flex-1">
+        <Image
+          className="ml-2 cursor-pointer"
+          src={search}
+          alt="search"
+          width={24}
+          height={24}
+        />
+      </div>
     </div>
   );
 }

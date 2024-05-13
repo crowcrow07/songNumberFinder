@@ -39,7 +39,15 @@ export default function SearchBar() {
         onChange={searchInputHandler}
         value={searchInputKeyword}
       />
-      <Image className="ml-2 cursor-pointer" src={search} alt="search" />
+      <div className="flex items-center justify-end flex-1">
+        <Image
+          className="ml-2 cursor-pointer"
+          src={search}
+          alt="search"
+          width={24}
+          height={24}
+        />
+      </div>
     </div>
   );
 }
