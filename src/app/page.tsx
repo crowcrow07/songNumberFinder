@@ -1,13 +1,25 @@
-import Header from "@/components/header";
-import ResultsBox from "@/components/results_box";
+"use client";
+
+import Overlay from "./components/overlay";
+import SingerSearch from "./page/singerSearch";
+import TitleSearch from "./page/titleSearch";
+import { useRecoilValue } from "recoil";
+import { searchKeywordType } from "./recoil/atom/atom";
 
 export default function Home() {
+  const searchType = useRecoilValue(searchKeywordType);
+
   return (
-    <main className="w-screen h-screen flex justify-center bg-[#ebebeb] max-screen:overflow-y-scroll">
-      <div className="xl:w-[1280px] lg:w-[1024px] md:w-[768px] sm:w-[640px] w-[80%] flex gap-16 flex-col items-center justify-center min-h-[660px] h-screen">
-        <Header />
-        <ResultsBox />
-      </div>
+    <main
+      className={`container ${
+        searchType === "singer" && "right-panel-active"
+      } w-screen h-screen flex justify-center bg-[#ebebeb] max-screen:overflow-y-scroll relative`}
+    >
+      <TitleSearch />
+      <SingerSearch />
+      <Overlay />
     </main>
   );
 }
+
+// x 398

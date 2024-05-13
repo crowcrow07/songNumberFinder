@@ -2,19 +2,19 @@
 
 import { useRef, useEffect } from "react";
 
-import ResultCard from "../result_card";
+import ResultCard from "../../../components/result_card";
 import { useRecoilValue } from "recoil";
 import { searchKeywordInput } from "@/app/recoil/atom/atom";
 
-import { useSongListSearchQuery } from "@/app/query/db/useDb";
+import { useSingerSongListSearchQuery } from "@/app/query/db/useDb";
 
-import { TjSongDBType, SearchQuery } from "@/app/types/type";
+import { SearchKeywordType, SearchQuery } from "@/app/types/type";
 
 export default function ResultsBox() {
   const searchKeyword: string = useRecoilValue(searchKeywordInput);
 
   const { data, isFetched, isLoading }: SearchQuery =
-    useSongListSearchQuery(searchKeyword);
+    useSingerSongListSearchQuery(searchKeyword);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,17 +35,17 @@ export default function ResultsBox() {
 
   return (
     <div className={`${Container} h-[50%]`}>
-      <div className="text-[24px]">
+      <div className="text-[16px] font-bold">
         {isSearchKeywordInputValue(searchKeyword)}
       </div>
-      <div ref={scrollRef} className="overflow-y-scroll w-full p-2">
-        <div className="gap-4 flex flex-col w-full">
+      <div ref={scrollRef} className="overflow-y-scroll w-full">
+        <div className="gap-2 flex flex-col w-full">
           {isLoading && <div className="text-center">로딩중입니다.</div>}
           {isFetched && (!data || data.length === 0) && (
             <div className="text-center">노래가 없습니다.</div>
           )}
           {isFetched &&
-            data!.map((keyword: TjSongDBType) => {
+            data!.map((keyword: SearchKeywordType) => {
               return <ResultCard key={keyword.id} data={keyword} />;
             })}
         </div>
@@ -55,4 +55,4 @@ export default function ResultsBox() {
 }
 
 const Container =
-  "pt-[36px] xl:px-[56px] lg:px-[40px] md:px-[28px] sm:px-[24px] px-[16px] drop-shadow-xl flex flex-col items-center  rounded-[20px] xl:w-[540px] lg:w-[500px] md:w-[460px] sm:w-[420px] w-[320px] bg-white pb-4";
+  "pt-[30px] xl:px-[36px] lg:px-[26px] md:px-[16px] sm:px-[6px] px-[6px] drop-shadow-xl flex flex-col items-center rounded-lg xl:w-[520px] lg:w-[480px] md:w-[440px] sm:w-[420px] w-[320px] bg-white pb-[16px]";
