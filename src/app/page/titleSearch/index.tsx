@@ -8,15 +8,16 @@ export default function TitleSearch() {
 
   return (
     <div className="form-container title-search-container w-[50%] flex gap-8 flex-col items-center justify-center min-h-[660px] h-full absolute top-0">
-      <Header />
       <button
         className={`${
           searchType === "singer" && "hidden"
-        } lg:hidden md:hidden border-white border-[1px] border-solid px-[45px] py-[12px] rounded-[20px] text-white`}
+        } lg:hidden md:hidden border-white border-[1px] border-solid px-[32px] py-[8px] rounded-[20px] text-white`}
         onClick={() => setSearchType("singer")}
       >
-        가수검색
+        {"가수검색 ->"}
       </button>
+      <Header />
+
       <ResultsBox />
     </div>
   );

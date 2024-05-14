@@ -26,7 +26,7 @@ export default function Overlay() {
             className="ghost border-white border-[1px] border-solid px-[45px] py-[12px] rounded-[20px] text-white"
             id="signIn"
           >
-            제목 검색
+            제목 검색 하러가기
           </button>
         </div>
         <div className="overlay-panel overlay-right">
@@ -41,7 +41,7 @@ export default function Overlay() {
             className="ghost border-white border-[1px] border-solid px-[45px] py-[12px] rounded-[20px] text-white"
             id="signUp"
           >
-            가수 검색
+            가수 검색 하러가기
           </button>
         </div>
       </div>
