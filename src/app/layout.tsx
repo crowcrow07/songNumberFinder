@@ -6,12 +6,41 @@ import { ThemeProvider } from "next-themes";
 import ReactQueryProviders from "./hooks/useReactQuery";
 import RecoilRootWrapper from "./hooks/useRecoilRootWrapper";
 
+import { META } from "./constants/metadata";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "이 노래 노래방에 있을까",
-  description:
-    "당신이 부르고 싶은 노래가 노래방에 있는지 확인하세요. TJ와 금영 노래방의 곡 목록을 한 번에 검색할 수 있는 사이트입니다.",
+  metadataBase: new URL(META.url),
+  title: META.title,
+  description: META.description,
+  icons: META.icons,
+  robots: META.robots,
+  verification: {
+    google: META.googleVerification,
+    other: {
+      "naver-site-verification": META.naverVerification,
+    },
+  },
+  keywords: [...META.keyword],
+  openGraph: {
+    title: META.title,
+    description: META.description,
+    siteName: META.title,
+    locale: "ko_KR",
+    type: "website",
+    url: META.url,
+    images: {
+      url: META.ogImage,
+    },
+  },
+  twitter: {
+    title: META.title,
+    description: META.description,
+    images: {
+      url: META.ogImage,
+    },
+  },
 };
 
 export default function RootLayout({
