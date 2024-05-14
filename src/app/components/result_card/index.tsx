@@ -27,7 +27,7 @@ export default function ResultCard({ data }: ResultCardProps) {
         <div className="xl:text-[18px] lg:text-[16px] md:text-[14px] text-[12px] text-nowrap text-ellipsis overflow-hidden xl:max-w-[280px] lg:max-w-[260px] md:max-w-[240px] sm:max-w-[220px] max-w-[180px]">
           {title}
         </div>
-        <div className="xl:text-[18px] lg:text-[16px] md:text-[14px] text-[12px]">
+        <div className="xl:text-[18px] lg:text-[16px] md:text-[14px] text-[12px] text-nowrap text-ellipsis overflow-hidden xl:max-w-[280px] lg:max-w-[260px] md:max-w-[240px] sm:max-w-[220px] max-w-[180px]">
           {artist}
         </div>
       </div>
