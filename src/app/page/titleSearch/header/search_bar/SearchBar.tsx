@@ -40,13 +40,7 @@ export default function SearchBar() {
         value={searchInputKeyword}
       />
       <div className="flex items-center justify-end flex-1">
-        <Image
-          className="ml-2 cursor-pointer"
-          src={search}
-          alt="search"
-          width={48}
-          height={48}
-        />
+        <Image className="ml-2 cursor-pointer" src={search} alt="search" />
       </div>
     </div>
   );
