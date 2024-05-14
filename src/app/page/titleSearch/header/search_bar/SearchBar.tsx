@@ -39,9 +39,6 @@ export default function SearchBar() {
         onChange={searchInputHandler}
         value={searchInputKeyword}
       />
-      <div className="flex items-center justify-end flex-1">
-        <Image className="ml-2 cursor-pointer" src={search} alt="search" />
-      </div>
     </div>
   );
 }
