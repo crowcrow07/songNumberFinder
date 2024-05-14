@@ -9,7 +9,7 @@ const getBaseUrl = () => {
   const environment = process.env.NODE_ENV;
   return environment === "development"
     ? "http://localhost:3000"
-    : "http://ec2-13-124-90-172.ap-northeast-2.compute.amazonaws.com:3000";
+    : "https://song-finder.crowcrow07.com";
 };
 
 export const getTjSongList = async ({ text, size }: TjSongListParams) => {
