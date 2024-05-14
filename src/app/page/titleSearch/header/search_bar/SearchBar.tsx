@@ -5,9 +5,6 @@ import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { searchKeywordInput } from "@/app/recoil/atom/atom";
 
-import Image from "next/image";
-import search from "@/app/assets/images/svg/search.svg";
-
 export default function SearchBar() {
   const [timer, setTimer] = useState(null);
   const [searchInputKeyword, setSearchInputKeyword] = useState("");
@@ -25,7 +22,10 @@ export default function SearchBar() {
     if (!value.trim()) return;
 
     const newTimer: any = setTimeout(() => {
-      setSearchKeywordInputValue(value);
+      setSearchKeywordInputValue((prevState) => ({
+        ...prevState,
+        title: value,
+      }));
     }, 500);
     setTimer(newTimer);
   };

@@ -11,10 +11,10 @@ import { useSingerSongListSearchQuery } from "@/app/query/db/useDb";
 import { SearchKeywordType, SearchQuery } from "@/app/types/type";
 
 export default function ResultsBox() {
-  const searchKeyword: string = useRecoilValue(searchKeywordInput);
+  const { singer } = useRecoilValue(searchKeywordInput);
 
   const { data, isFetched, isLoading }: SearchQuery =
-    useSingerSongListSearchQuery(searchKeyword);
+    useSingerSongListSearchQuery(singer);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -29,14 +29,14 @@ export default function ResultsBox() {
       case "":
         return "검색어를 입력해주세요.";
       default:
-        return `${searchKeyword} 로 검색된 결과`;
+        return `${singer} 로 검색된 결과`;
     }
   };
 
   return (
     <div className={`${Container} h-[50%]`}>
       <div className="text-[16px] font-bold">
-        {isSearchKeywordInputValue(searchKeyword)}
+        {isSearchKeywordInputValue(singer)}
       </div>
       <div ref={scrollRef} className="overflow-y-scroll w-full">
         <div className="gap-2 flex flex-col w-full">
