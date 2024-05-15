@@ -19,16 +19,27 @@ export async function GET(req: Request, context: { params: Params }) {
       SELECT k.id, REPLACE(k.artist, ' ', '') AS cleaned_artist, k.songNumber, k.title, 'KY' AS source
       FROM KY k
   ),
-  NumberedResults AS (
-      SELECT *,
-             ROW_NUMBER() OVER (PARTITION BY source ORDER BY id) AS rownum
-      FROM CleanedArtist
-      WHERE cleaned_artist LIKE '%${searchKeyword}%'
+  ExactMatches AS (
+      SELECT ca.id, ca.cleaned_artist, ca.songNumber, ca.title, ca.source,
+             ROW_NUMBER() OVER (PARTITION BY ca.source ORDER BY ca.id) AS rownum
+      FROM CleanedArtist ca
+      WHERE ca.cleaned_artist = '${searchKeyword}'
+  ),
+  PartialMatches AS (
+      SELECT ca.id, ca.cleaned_artist, ca.songNumber, ca.title, ca.source,
+             ROW_NUMBER() OVER (PARTITION BY ca.source ORDER BY ca.id) AS rownum
+      FROM CleanedArtist ca
+      WHERE ca.cleaned_artist LIKE '%${searchKeyword}%' AND ca.cleaned_artist != '${searchKeyword}'
+  ),
+  CombinedResults AS (
+      SELECT * FROM ExactMatches
+      UNION ALL
+      SELECT * FROM PartialMatches
   )
   SELECT id, title, songNumber, cleaned_artist AS artist, source
-  FROM NumberedResults
-  ORDER BY rownum, source
-  LIMIT 300;
+  FROM CombinedResults
+  ORDER BY (CASE WHEN cleaned_artist = '${searchKeyword}' THEN 0 ELSE 1 END), rownum, source
+  LIMIT 500;  
   `;
 
     const results = await searchDbExecuteQuery(query);

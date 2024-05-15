@@ -13,22 +13,57 @@ export async function GET(req: Request, context: { params: Params }) {
 
     const query = `
     WITH CleanedTitles AS (
-      SELECT t.id, REPLACE(t.title, ' ', '') AS cleaned_title, t.songNumber, t.artist, 'TJ' AS source
+      SELECT t.id, 
+             REGEXP_REPLACE(t.title, '[^a-zA-Z0-9가-힣]', '') AS cleaned_title, 
+             t.title AS original_title, 
+             t.songNumber, 
+             t.artist, 
+             'TJ' AS source
       FROM TJ t
       UNION ALL
-      SELECT k.id, REPLACE(k.title, ' ', '') AS cleaned_title, k.songNumber, k.artist, 'KY' AS source
+      SELECT k.id, 
+             REGEXP_REPLACE(k.title, '[^a-zA-Z0-9가-힣]', '') AS cleaned_title, 
+             k.title AS original_title, 
+             k.songNumber, 
+             k.artist, 
+             'KY' AS source
       FROM KY k
   ),
-  NumberedResults AS (
+  FilteredResults AS (
       SELECT *,
-             ROW_NUMBER() OVER (PARTITION BY source ORDER BY id) AS rownum
+             CASE
+                 WHEN original_title LIKE '%${searchKeyword}%' THEN INSTR(original_title, '${searchKeyword}')
+                 ELSE 1000 + INSTR(cleaned_title, REGEXP_REPLACE('${searchKeyword}', '[^a-zA-Z0-9가-힣]', ''))
+             END AS ranking
       FROM CleanedTitles
-      WHERE cleaned_title LIKE '%${searchKeyword}%'
+      WHERE INSTR(cleaned_title, REGEXP_REPLACE('${searchKeyword}', '[^a-zA-Z0-9가-힣]', '')) > 0 
+         OR original_title LIKE '%${searchKeyword}%'
+  ),
+  RankedResults AS (
+      SELECT *,
+             ROW_NUMBER() OVER (PARTITION BY source ORDER BY ranking, id) AS source_rank
+      FROM FilteredResults
+  ),
+  TJResults AS (
+      SELECT id, original_title, songNumber, artist, source, source_rank 
+      FROM RankedResults
+      WHERE source = 'TJ'
+  ),
+  KYResults AS (
+      SELECT id, original_title, songNumber, artist, source, source_rank 
+      FROM RankedResults
+      WHERE source = 'KY'
   )
-  SELECT id, cleaned_title AS title, songNumber, artist, source
-  FROM NumberedResults
-  ORDER BY rownum, source
-  LIMIT 50;
+  SELECT id, original_title AS title, songNumber, artist, source
+  FROM (
+      SELECT id, original_title, songNumber, artist, source, source_rank
+      FROM TJResults
+      UNION ALL
+      SELECT id, original_title, songNumber, artist, source, source_rank
+      FROM KYResults
+  ) AS CombinedResults
+  ORDER BY source_rank, source
+  LIMIT 100;  
   `;
 
     const results = await searchDbExecuteQuery(query);
