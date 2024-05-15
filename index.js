@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
 import { createPool } from "mysql2/promise";
-import "dotenv/config";
+import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.production" });
 
