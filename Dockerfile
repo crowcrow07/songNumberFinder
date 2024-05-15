@@ -1,7 +1,5 @@
 FROM node:18-alpine
 
-
-
 RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont udev xvfb x11vnc fluxbox dbus
 
 RUN apk add --no-cache --virtual .build-deps curl \
@@ -11,7 +9,7 @@ RUN apk add --no-cache --virtual .build-deps curl \
     && apk add --no-cache curl wget \
     && apk del .build-deps
 
-RUN apk add --no-cache cron
+RUN apk add --no-cache dcron
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
