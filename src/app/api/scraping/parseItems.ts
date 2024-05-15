@@ -41,3 +41,22 @@ export function parseKyItems(html: string) {
 
   return items;
 }
+
+export function parseKyNewItems(html: string) {
+  const $ = cheerio.load(html);
+  const items: KySongRecord[] = [];
+
+  $("#search_chart_frm > div > ul").each((index, element) => {
+    if (index > 0) {
+      const li = $(element).find("li");
+      const item = {
+        songNumber: $(li[1]).text().trim(),
+        title: $(li[2]).find("span").eq(0).text().trim(),
+        artist: $(li[2]).find("span").eq(1).text().trim(),
+      };
+      items.push(item);
+    }
+  });
+
+  return items;
+}
