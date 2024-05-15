@@ -2,8 +2,26 @@ import puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
 import { createPool } from "mysql2/promise";
 import dotenv from "dotenv";
+import fs from "fs";
 
-dotenv.config({ path: ".env.production" });
+// 환경 변수 파일 경로 설정
+const dotenvPath = ".env.production";
+
+// .env.production 파일이 존재하는지 확인
+if (fs.existsSync(dotenvPath)) {
+  console.log(`.env.production 파일이 존재합니다.`);
+} else {
+  console.error(`.env.production 파일이 존재하지 않습니다.`);
+}
+
+// 환경 변수 파일 로드
+dotenv.config({ path: dotenvPath });
+
+// 환경 변수 출력하여 확인
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+console.log("DB_DATABASE:", process.env.DB_DATABASE);
 
 const pool = createPool({
   host: process.env.DB_HOST,
