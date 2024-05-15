@@ -1,6 +1,8 @@
 FROM node:18-alpine
 
-RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont udev xvfb x11vnc fluxbox dbus  # puppeteer 실행을 위해 필요한 패키지들을 설치
+
+
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont udev xvfb x11vnc fluxbox dbus
 
 RUN apk add --no-cache --virtual .build-deps curl \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
@@ -8,6 +10,8 @@ RUN apk add --no-cache --virtual .build-deps curl \
     && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk add --no-cache curl wget \
     && apk del .build-deps
+
+RUN apk add --no-cache cron
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -21,6 +25,11 @@ COPY ./ ./
 RUN npm i 
 RUN npm run build
 
+COPY crontab /etc/crontabs/root
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 3000
 
-CMD Xvfb :99 -screen 0 1024x768x16 -ac & npm start
+CMD ["/usr/local/bin/entrypoint.sh"]
