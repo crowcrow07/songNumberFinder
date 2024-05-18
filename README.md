@@ -37,3 +37,48 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 // ky
 // https://kysing.kr/karaoke-book/?city=kr&s_cd=2&s_page=1&s_value=<노래제목>
+
+// const arr = [
+// "w",
+// "x",
+// "y",
+// "z",
+// "0",
+// "1",
+// "2",
+// "3",
+// "4",
+// "5",
+// "6",
+// "7",
+// "8",
+// "9",
+// ];
+
+// const [page, setPage] = useState(1);
+// const [text, setText] = useState(0);
+
+// const { data: kyData, isFetched: success } = useKyScrapingQuery({
+// text: arr[text],
+// page: page.toString(),
+// });
+
+// useEffect(() => {
+// if (success) {
+// console.log("page : ", page, " text : ", arr[text]);
+// kySongDbCreate(kyData, {
+// onSuccess: () => {
+// if (page < 720) {
+// setPage(page + 1);
+// } else {
+// if (text + 1 < arr.length) {
+// setText(text + 1);
+// setPage(1);
+// } else {
+// console.log("All data processed");
+// }
+// }
+// },
+// });
+// }
+// }, [kyData, kySongDbCreate, success, page, text]);
